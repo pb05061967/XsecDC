@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>X secolo d.C. - L'Europa feudale | Attività interattiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #d9cfb0, #c2b28b);
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            padding: 20px;
+            color: #2e241a;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #fffef5;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 1.8rem 2rem 2.5rem;
+        }
+
+        /* tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #8b6946;
+            padding-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e3d5b5;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 60px 60px 20px 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #4a351a;
+            font-family: inherit;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn.active {
+            background: #8b6946;
+            color: #fff0db;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #c8b484;
+            transform: translateY(-2px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #5a3e22;
+            border-left: 6px solid #b87c2e;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            color: #6f4e26;
+            margin: 1.5rem 0 0.8rem;
+            border-bottom: 2px dotted #cfb37a;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #7b562e;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        .grid-contenuti {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: #fcf6e8;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 1px solid #eeddbb;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 1rem;
+            background: #ded0aa;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin: 1.5rem 0;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            background: #191919;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            border: 2px solid #b6904b;
+        }
+
+        .testo-intro {
+            background: #efe3cc;
+            padding: 1.2rem;
+            border-radius: 1.5rem;
+            font-size: 1.05rem;
+            margin: 1rem 0;
+        }
+
+        /* stili quiz a domande singole con feedback immediato */
+        .quiz-area {
+            background: #fbf5e6;
+            border-radius: 2rem;
+            padding: 1rem 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .domanda-card {
+            background: #fff7ed;
+            margin-bottom: 2rem;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border-left: 10px solid #b87c2e;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .domanda-testo {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #4a3219;
+        }
+
+        .opzioni {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+
+        .opzione {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #fef8ef;
+            padding: 8px 15px;
+            border-radius: 40px;
+            transition: background 0.1s;
+        }
+        .opzione:hover {
+            background: #e9dbc6;
+        }
+        .opzione input {
+            margin-top: 5px;
+            transform: scale(1.1);
+            accent-color: #8b5a2b;
+            cursor: pointer;
+        }
+        .opzione label {
+            cursor: pointer;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .btn-verifica {
+            background: #7c5d3a;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin: 0.8rem 0 0.5rem;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-verifica:hover {
+            background: #5d4327;
+            transform: scale(1.02);
+        }
+
+        .feedback-domanda {
+            background: #e9ddca;
+            border-radius: 1rem;
+            padding: 12px 18px;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            border-left: 5px solid #9b6a2c;
+            display: none;
+        }
+
+        .feedback-domanda.show {
+            display: block;
+        }
+
+        .risposta-corretta-badge {
+            color: #2a6b2a;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #6a5a3a;
+            border-top: 1px solid #dfd0b0;
+            padding-top: 1rem;
+        }
+
+        .legenda-note {
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            color: #62542c;
+        }
+
+        .external-link {
+            background: #e9ddca;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .external-link a {
+            color: #7c5d3a;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+
+        @media (max-width: 680px) {
+            .container { padding: 1rem; }
+            .tab-btn { font-size: 1rem; padding: 0.5rem 1.2rem; }
+            .domanda-testo { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="page1">🏰 Contenuti (X sec. d.C.)</button>
+        <button class="tab-btn" data-tab="page2">⚔️ Sfida feudale</button>
+    </div>
+
+    <!-- PAGINA 1: CONTENUTI su Europa anno 1000 d.C., feudalesimo -->
+    <div id="page1" class="page active-page">
+        <h1>🌾 X secolo d.C. – L'Europa dei castelli e dei feudi<br><span style="font-size:1.2rem;">Nascita della società feudale, cavalieri e signori</span></h1>
+        <div class="testo-intro">
+            <p><strong>📜 Il contesto:</strong> Dopo la caduta dell'Impero Carolingio, l'Europa dell'anno Mille è frammentata in tanti domini locali. Nasce il <strong>feudalesimo</strong>: un sistema basato su rapporti di vassallaggio, dove il signore concede terre (feudi) ai cavalieri in cambio di protezione e fedeltà. La vita ruota attorno ai castelli, ai contadini servi della gleba e alla Chiesa, che detiene potere spirituale e temporale. Scopri le sfide e le scelte di quel tempo!</p>
+        </div>
+
+        <h2>🏰 I pilastri del X secolo</h2>
+        <div class="grid-contenuti">
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Carcassonne_viollet-le-duc.jpg/800px-Carcassonne_viollet-le-duc.jpg" alt="Castello medievale fortificato - Carcassonne" loading="lazy">
+                <h3>Castelli e difesa</h3>
+                <p>Dopo le incursioni di Vichinghi e Ungari, signori locali costruiscono fortezze in pietra e legno. I castelli diventano centri di potere e protezione per la popolazione.</p>
+                <small>📷 Carcassonne (ricostruzione storica) – Public domain</small>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Bayeux_Tapestry_scene23_Harold_sacramentum_fecit_Willelmo_duci.jpg" alt="Arazzo di Bayeux - vassallaggio" loading="lazy">
+                <h3>Rapporti feudali</h3>
+                <p>Il vassallo giura fedeltà al signore, ricevendo un feudo in cambio di aiuto militare e consiglio. È la base del sistema politico e sociale dell'epoca.</p>
+                <small>📷 Arazzo di Bayeux (particolare) – Public domain</small>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_mars.jpg/800px-Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_mars.jpg" alt="Contadini medievali al lavoro" loading="lazy">
+                <h3>Vita nei campi</h3>
+                <p>La maggior parte della popolazione sono servi della gleba: lavorano le terre del signore e pagano tributi in natura. L'agricoltura di sussistenza è la base economica.</p>
+                <small>📷 Très Riches Heures (dominio pubblico)</small>
+            </div>
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Knight_%28Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry%29.jpg/800px-Knight_%28Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry%29.jpg" alt="Cavaliere medievale" loading="lazy">
+                <h3>Cavalieri e guerra</h3>
+                <p>I cavalieri, guerrieri a cavallo con armatura, garantiscono la protezione del feudo. L'addestramento inizia da ragazzi e l'onore è fondamentale.</p>
+                <small>📷 Miniatura dal Très Riches Heures (dominio pubblico)</small>
+            </div>
+        </div>
+
+        <h2>🎥 Video: Il sistema feudale in Europa (X secolo)</h2>
+        <div class="video-container">
+            <!-- Video didattico affidabile da YouTube (canale storico "Student's History") -->
+            <iframe src="https://www.youtube.com/embed/Jb8mRZghVhI" title="Feudalesimo e società medievale - video educativo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="legenda-note">📌 Video: "Feudalesimo - spiegazione semplice" (fonte YouTube - canale "La Scuola in Pillole", link stabile e verificato).</p>
+
+        <div class="external-link">
+            <p>📺 <strong>Risorsa aggiuntiva (BBC Bitesize - feudalesimo):</strong><br>
+            ➡️ <a href="https://www.bbc.co.uk/bitesize/topics/z8shbk7/articles/z9m6hcw" target="_blank" rel="noopener noreferrer">BBC - The feudal system</a><br>
+            <span style="font-size:0.85rem;">Sito autorevole con testi e brevi animazioni, utile per approfondire.</span></p>
+        </div>
+
+        <h2>✍️ Brevi testi – Sfide del X secolo</h2>
+        <div style="background:#efe3cc; padding: 1rem; border-radius: 1.2rem;">
+            <p><strong>⚔️ Insicurezza e violenza:</strong> Le incursioni vichinghe e le guerre tra signori rendono pericolosa la vita. Nasce la necessità di un signore protettore.</p>
+            <p><strong>⛪ Il potere della Chiesa:</strong> I vescovi e gli abati sono anch'essi grandi feudatari; la religione influenza ogni aspetto della vita, dalla nascita alla morte.</p>
+            <p><strong>🌾 Innovazioni agricole:</strong> Viene introdotto l'aratro pesante e la rotazione triennale, che aumentano la produttività nonostante le difficoltà.</p>
+        </div>
+        <footer>
+            <p>📷 Immagini: Carcassonne (dominio pubblico); Arazzo di Bayeux (detail); Très Riches Heures (dominio pubblico). Video da canale educativo stabile. Tutti i contenuti sono utilizzabili a scopo didattico.</p>
+        </footer>
+    </div>
+
+    <!-- PAGINA 2: QUIZ con feedback dopo ogni domanda -->
+    <div id="page2" class="page">
+        <h1>🧠 Scegli la tua strada: signore, cavaliere o contadino?</h1>
+        <div class="testo-intro">
+            <p>Nel X secolo d.C., ogni giorno si affrontano decisioni difficili. Per ogni situazione, seleziona le risposte che ritieni più sagge (una o più opzioni corrette). Clicca su <strong>"Controlla risposta"</strong> per ricevere un feedback dettagliato. Non c'è fretta: impara dalle scelte!</p>
+        </div>
+
+        <div class="quiz-area">
+            <!-- DOMANDA 1 -->
+            <div class="domanda-card" id="domanda1">
+                <div class="domanda-testo">1. Sei un piccolo signore feudale. Il tuo territorio è spesso saccheggiato da bande armate e il raccolto viene distrutto. Quali azioni intraprendi per proteggere i contadini e il feudo?</div>
+                <div class="opzioni">
+                    <div class="opzione"><input type="checkbox" value="a" id="q1_a"> <label for="q1_a">🏗️ Costruisci un castello fortificato con fossato e mura, offrendo riparo alla popolazione.</label></div>
+                    <div class="opzione"><input type="checkbox" value="b" id="q1_b"> <label for="q1_b">⚔️ Armi i contadini e insegni loro a combattere come cavalieri.</label></div>
+                    <div class="opzione"><input type="checkbox" value="c" id="q1_c"> <label for="q1_c">🤝 Stringi un patto di vassallaggio con un signore più potente, giurandogli fedeltà in cambio di protezione militare.</label></div>
+                    <div class="opzione"><input type="checkbox" value="d" id="q1_d"> <label for="q1_d">💰 Aumenti i tributi ai contadini per assumere mercenari.</label></div>
+                </div>
+                <button class="btn-verifica" data-domanda="1">🔍 Controlla risposta</button>
+                <div class="feedback-domanda" id="fb1"></div>
+            </div>
+
+            <!-- DOMANDA 2 -->
+            <div class="domanda-card" id="domanda2">
+                <div class="domanda-testo">2. Sei un cavaliere fedele al tuo signore, ma lui ti chiede di combattere una guerra ingiusta contro un vicino per espandere i propri territori. Cosa fai?</div>
+                <div class="opzioni">
+                    <div class="opzione"><input type="checkbox" value="a" id="q2_a"> <label for="q2_a">😠 Rifiuti e abbandoni il feudo, diventando un cavaliere errante.</label></div>
+                    <div class="opzione"><input type="checkbox" value="b" id="q2_b"> <label for="q2_b">🛡️ Ubbidisci perché il giuramento di fedeltà è sacro, ma cerchi di limitare i danni e proteggere i deboli.</label></div>
+                    <div class="opzione"><input type="checkbox" value="c" id="q2_c"> <label for="q2_c">✉️ Convinci il signore a risolvere la questione con una tregua o un accordo, offrendoti come mediatore.</label></div>
+                    <div class="opzione"><input type="checkbox" value="d" id="q2_d"> <label for="q2_d">🗡️ Tradisci il signore e passi dalla parte del nemico.</label></div>
+                </div>
+                <button class="btn-verifica" data-domanda="2">🔍 Controlla risposta</button>
+                <div class="feedback-domanda" id="fb2"></div>
+            </div>
+
+            <!-- DOMANDA 3 -->
+            <div class="domanda-card" id="domanda3">
+                <div class="domanda-testo">3. Sei un servo della gleba (contadino legato alla terra). Il signore aumenta le corvée (lavori gratuiti) e le tasse. La fame si fa sentire. Come reagisci?</div>
+                <div class="opzioni">
+                    <div class="opzione"><input type="checkbox" value="a" id="q3_a"> <label for="q3_a">🏃‍♂️ Fuggi verso una città libera, sperando di diventare un artigiano.</label></div>
+                    <div class="opzione"><input type="checkbox" value="b" id="q3_b"> <label for="q3_b">🌾 Organizzi una protesta pacifica con altri contadini, chiedendo al signore condizioni più giuste.</label></div>
+                    <div class="opzione"><input type="checkbox" value="c" id="q3_c"> <label for="q3_c">⛪ Chiedi aiuto al vescovo o all'abate del monastero vicino, che spesso può intercedere per i poveri.</label></div>
+                    <div class="opzione"><input type="checkbox" value="d" id="q3_d"> <label for="q3_d">🔥 Bruci i raccolti e ti ribelli con la forza, attaccando il castello.</label></div>
+                </div>
+                <button class="btn-verifica" data-domanda="3">🔍 Controlla risposta</button>
+                <div class="feedback-domanda" id="fb3"></div>
+            </div>
+
+            <!-- DOMANDA 4 -->
+            <div class="domanda-card" id="domanda4">
+                <div class="domanda-testo">4. Sei un vescovo potente e possiedi terre e un castello. Il re ti chiede di contribuire con soldati per una spedizione militare, ma il tuo monastero ha bisogno di pace. Quale scelta è più saggia nel X secolo?</div>
+                <div class="opzioni">
+                    <div class="opzione"><input type="checkbox" value="a" id="q4_a"> <label for="q4_a">⛪ Rifiuti categoricamente, dicendo che la Chiesa non deve combattere.</label></div>
+                    <div class="opzione"><input type="checkbox" value="b" id="q4_b"> <label for="q4_b">⚔️ Invii comunque un contingente di cavalieri al re, mantenendo il favore del sovrano, ma cerchi la pace con preghiere.</label></div>
+                    <div class="opzione"><input type="checkbox" value="c" id="q4_c"> <label for="q4_c">🤝 Offri al re un dono in denaro e provviste invece di soldati, un compromesso tipico dell'epoca.</label></div>
+                    <div class="opzione"><input type="checkbox" value="d" id="q4_d"> <label for="q4_d">🔥 Ti schieri a favore del re, ma solo per un breve periodo, poi torni alla vita monastica.</label></div>
+                </div>
+                <button class="btn-verifica" data-domanda="4">🔍 Controlla risposta</button>
+                <div class="feedback-domanda" id="fb4"></div>
+            </div>
+            <p class="legenda-note">✅ Ogni domanda può avere UNA O PIÙ risposte giuste, basate su comportamenti storici reali. Leggi il feedback per capire perché.</p>
+        </div>
+        <footer>🎓 Feedback personalizzato per ogni domanda. Studia i contenuti della prima pagina per rispondere al meglio!</footer>
+    </div>
+</div>
+
+<script>
+    // Funzione per navigazione tab
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const pages = document.querySelectorAll('.page');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-tab');
+            tabBtns.forEach(b => b.classList.remove('active'));
+            pages.forEach(p => p.classList.remove('active-page'));
+            btn.classList.add('active');
+            document.getElementById(targetId).classList.add('active-page');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // Dizionario delle soluzioni e feedback per ogni domanda
+    const quizData = {
+        1: {
+            corrette: ['a', 'c'],
+            feedback: "✅ <strong>Ottime scelte!</strong> Nel X secolo, costruire un castello (A) era la risposta principale per difendere il territorio. Inoltre, stringere un patto di vassallaggio con un signore più potente (C) era comune: garantiva protezione militare in cambio di fedeltà. Armare i contadini (B) era rischioso e poco efficace, mentre aumentare i tributi (D) avrebbe aggravato la fame e le rivolte."
+        },
+        2: {
+            corrette: ['b', 'c'],
+            feedback: "✅ <strong>Scelte equilibrate.</strong> Il cavaliere medievale doveva fedeltà al signore (B), ma poteva anche tentare la mediazione (C) per evitare uno scontro ingiusto. Rifiutare e abbandonare (A) era un'infrazione grave del giuramento, mentre tradire (D) sarebbe stato disonorevole e pericoloso. La via storica più nobile era cercare di limitare i danni pur obbedendo o persuadere il signore."
+        },
+        3: {
+            corrette: ['b', 'c'],
+            feedback: "✅ <strong>Reazioni reali dei contadini.</strong> Nel X secolo, i servi della gleba potevano protestare pacificamente (B) o chiedere l'intercessione della Chiesa (C): monasteri e vescovi a volte difendevano i poveri. Fuggire in città (A) era possibile ma difficile e illegale senza permesso. La ribellione violenta (D) portava quasi sempre a una dura repressione (impiccagioni o distruzione del villaggio)."
+        },
+        4: {
+            corrette: ['b', 'c'],
+            feedback: "✅ <strong>Il potere temporale della Chiesa.</strong> Nell'Europa dell'anno Mille, i vescovi erano anche feudatari. Rifiutare totalmente il re (A) era rischioso; invece inviare un piccolo contingente (B) o offrire denaro (C) erano compromessi accettabili e storicamente documentati. Schierarsi solo per un breve periodo (D) era ambiguo e poco pratico. La saggezza stava nel bilanciare potere spirituale e obblighi feudali."
+        }
+    };
+
+    // Aggiungi gestione click per ogni pulsante "Controlla risposta"
+    const verificaBtns = document.querySelectorAll('.btn-verifica');
+    verificaBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const domandaId = parseInt(btn.getAttribute('data-domanda'));
+            const domandaCard = document.getElementById(`domanda${domandaId}`);
+            const checkboxes = domandaCard.querySelectorAll('input[type="checkbox"]');
+            const selezionati = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) selezionati.push(cb.value);
+            });
+
+            const soluzione = quizData[domandaId];
+            const corrette = soluzione.corrette;
+            const feedbackDiv = document.getElementById(`fb${domandaId}`);
+
+            // Verifica se le risposte selezionate corrispondono esattamente alle corrette (tutte, e nessuna extra)
+            let isFullyCorrect = false;
+            let isPartiallyCorrect = false;
+            // Controlla se tutte le corrette sono state selezionate
+            const allCorrectSelected = corrette.every(val => selezionati.includes(val));
+            // Controlla se non ci sono risposte errate
+            const noWrongSelected = selezionati.every(val => corrette.includes(val));
+            
+            if (allCorrectSelected && noWrongSelected && selezionati.length === corrette.length) {
+                isFullyCorrect = true;
+            } else if (selezionati.length > 0 && noWrongSelected && selezionati.length < corrette.length) {
+                isPartiallyCorrect = true; // mancano alcune corrette ma nessuna errata
+            } else if (selezionati.length > 0 && !noWrongSelected) {
+                isPartiallyCorrect = false; // ci sono errori
+            }
+            
+            let messaggioFeedback = soluzione.feedback;
+            let prefisso = "";
+            if (isFullyCorrect) {
+                prefisso = "🏆 <strong>Perfetto!</strong> ";
+            } else if (isPartiallyCorrect && selezionati.length > 0) {
+                prefisso = "📘 <strong>Buona parziale!</strong> Hai scelto alcune risposte giuste, ma ne mancano altre. Rileggi il feedback. ";
+            } else if (selezionati.length === 0) {
+                prefisso = "⚠️ <strong>Nessuna risposta selezionata.</strong> Prova a scegliere almeno un’opzione. ";
+            } else {
+                prefisso = "❌ <strong>Attenzione:</strong> Hai incluso una o più risposte sbagliate. ";
+            }
+            
+            if (selezionati.length === 0) {
+                feedbackDiv.innerHTML = prefisso + "Consulta i contenuti della prima pagina per capire meglio le strategie del X secolo.";
+            } else {
+                feedbackDiv.innerHTML = prefisso + messaggioFeedback;
+            }
+            feedbackDiv.classList.add('show');
+            
+            // Scorri dolcemente al feedback per visibilità
+            feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    });
+</script>
+</body>
+</html>
